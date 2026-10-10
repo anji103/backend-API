@@ -1,0 +1,45 @@
+name: Deploy to aws
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to aws
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            set -e
+
+            cd /opt/backend-API/backend-API
+
+            echo "Pulling latest code..."
+            git pull origin main
+
+            echo "Building Docker image..."
+            docker build -t backend-api:latest .
+
+            echo "Stopping existing containers..."
+            docker-compose down
+
+            echo "Starting containers..."
+            docker-compose up -d
+
+            echo "Removing unused images..."
+            docker image prune -f
+
+            echo "Deployment completed successfully!"

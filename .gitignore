@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment secrets — never commit .env
+.env
+.env.local
+.env.production
+.env.staging
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swo~
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# RSA keys (keep out of version control)
+*.pem
+*.key
+private_key*
+public_key*
+docs/

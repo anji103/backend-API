@@ -1,0 +1,32 @@
+line-length = 100
+target-version = "py313"
+exclude = [
+    ".git",
+    ".venv",
+    "__pycache__",
+    "migrations",
+    "dist",
+    "build",
+]
+
+[lint]
+select = ["E", "F", "I", "N", "UP", "B", "SIM", "RUF"]
+ignore = [
+    "B008",   # FastAPI uses function calls in Depends() defaults
+    "UP007",  # Allow X | Y union syntax (already default in 3.10+)
+]
+
+[lint.per-file-ignores]
+"app/modules/*/models.py" = ["N815"]          # Mixed case column names are fine in models
+"app/modules/*/repository.py" = ["E501"]      # TODO comment signatures can exceed line length
+"app/modules/*/service.py" = ["E501"]         # TODO comment signatures can exceed line length
+"app/modules/*/router.py" = ["E501"]          # TODO comment lines can exceed line length
+
+[lint.isort]
+known-first-party = ["app"]
+force-sort-within-sections = true
+
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
